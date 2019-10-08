@@ -88,7 +88,7 @@ export default class Comparer extends React.Component<IComparerProps, IComparerS
 
 
     return (
-      <React.Fragment>
+      <div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.onUpdateTitle} />
@@ -141,7 +141,7 @@ export default class Comparer extends React.Component<IComparerProps, IComparerS
             ref={this._linkBeforeLabel}>{this.props.beforeLabel}</div>
         </div>
 
-      </React.Fragment>
+      </div>
     );
   }
 

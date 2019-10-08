@@ -20,10 +20,9 @@ import * as strings from 'PropertyPaneFilePickerStrings';
 import LinkFilePickerTab from './LinkFilePickerTab/LinkFilePickerTab';
 import UploadFilePickerTab from './UploadFilePickerTab/UploadFilePickerTab';
 import SiteFilePickerTab from './SiteFilePickerTab/SiteFilePickerTab';
-import WebSearchTab from './WebSearchTab/WebSearchTab';
 import RecentFilesTab from './RecentFilesTab/RecentFilesTab';
 import { ItemType } from './IPropertyPaneFilePicker';
-import OneDriveTab from './OneDriveTab/OneDriveTab';
+// import OneDriveTab from './OneDriveTab/OneDriveTab';
 
 // The list of acceptable image file types
 const ACCEPTABLE_IMAGEFILE_EXTENSIONS: string = ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg";
@@ -55,18 +54,18 @@ export class PropertyPaneFilePickerHost extends React.Component<IPropertyPaneFil
             icon: 'Recent',
             key: 'keyRecent',
           },
-          {
-            name: strings.WebSearchLinkLabel,
-            url: '#search',
-            key: 'keyWeb',
-            icon: 'Search',
-          },
-          {
-            name: "OneDrive",
-            url: '#onedrive',
-            key: 'keyOneDrive',
-            icon: 'OneDrive',
-          },
+          // {
+          //   name: strings.WebSearchLinkLabel,
+          //   url: '#search',
+          //   key: 'keyWeb',
+          //   icon: 'Search',
+          // },
+          // {
+          //   name: "OneDrive",
+          //   url: '#onedrive',
+          //   key: 'keyOneDrive',
+          //   icon: 'OneDrive',
+          // },
           {
             name: strings.SiteLinkLabel,
             url: '#globe',
@@ -160,20 +159,13 @@ export class PropertyPaneFilePickerHost extends React.Component<IPropertyPaneFil
               onClose={() => this._handleClosePanel()}
               onSave={(value: string) => this._handleSave(value)}
             />}
-            {this.state.selectedTab === "keyWeb" && <WebSearchTab
+            {/* {this.state.selectedTab === "keyOneDrive" && <OneDriveTab
               itemType={this.props.itemType}
               context={this.props.webPartContext}
               accepts={accepts}
               onClose={() => this._handleClosePanel()}
               onSave={(value: string) => this._handleSave(value)}
-            />}
-            {this.state.selectedTab === "keyOneDrive" && <OneDriveTab
-              itemType={this.props.itemType}
-              context={this.props.webPartContext}
-              accepts={accepts}
-              onClose={() => this._handleClosePanel()}
-              onSave={(value: string) => this._handleSave(value)}
-            />}
+            />} */}
             {this.state.selectedTab === "keyRecent" && <RecentFilesTab
               itemType={this.props.itemType}
               context={this.props.webPartContext}
