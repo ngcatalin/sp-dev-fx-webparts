@@ -23,9 +23,10 @@ Sample web part that demonstrates how you can store Teams Personal App Web Part'
 
 Teams Personal Apps, or Personal Tabs don't have settings.
 For SPFx it means few things:
-* Web Part will never be switched to Edit mode
+* Web Part will never be switched to **Edit** mode
 * Property Pane will never be shown
-* `this.properties` value is always undefined
+* `this.properties` value is always `undefined`
+
 But there are definitely scenarios when we want to be able to configure Personal App and store this configuration somehow.
 The provided sample demonstrates how it can be achieved using custom Settings Panel and custom list in user's OneDrive.
 
@@ -39,8 +40,8 @@ Downside of this approach is we need to additionally implement "app uninstalled"
 
 ## Applies to
 
-* [SharePoint Framework](http://dev.office.com/sharepoint/docs/spfx/sharepoint-framework-overview)
-* [Office 365 developer tenant](http://dev.office.com/sharepoint/docs/spfx/set-up-your-developer-tenant)
+* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Office 365 developer tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
 
 ## Solution
 
