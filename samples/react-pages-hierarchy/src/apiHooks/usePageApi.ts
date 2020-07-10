@@ -1,9 +1,9 @@
-import { useReducer, useEffect, useState } from 'react';
-import { sp, PermissionKind } from '@pnp/sp/presets/all';
-import { ErrorHelper, LogHelper, ListTitles, PageFields } from '@src/utilities';
+import { useReducer, useEffect, useState } from "react";
+import { sp, PermissionKind } from "@pnp/sp/presets/all";
+import { ErrorHelper, LogHelper, ListTitles, PageFields } from "@src/utilities";
 import { Action } from "./action";
-import { GetRequest } from './getRequest';
-import { IPage } from '@src/models/IPage';
+import { GetRequest } from "./getRequest";
+import { IPage } from "@src/models/IPage";
 
 // state that we track
 interface PagesState {
@@ -21,12 +21,12 @@ interface PageApi {
 }
 
 /*
-* Setup actions, action types and our reducer
-*/
+ * Setup actions, action types and our reducer
+ */
 interface PageTreePayloadAction extends Action {
   payload: {
-    childgrenPages: IPage[],
-    ancestorPages: IPage[]
+    childgrenPages: IPage[];
+    ancestorPages: IPage[];
   };
 }
 interface ParentPageColumnExistAction extends Action {
@@ -37,8 +37,10 @@ interface CanUserManagePagesAction extends Action {
 }
 
 class ActionTypes {
-  public static readonly CAN_USER_MANAGE_PAGES: string = "CAN_USER_MANAGE_PAGES";
-  public static readonly PARENT_PAGE_COLUMN_EXISTS: string = "PARENT_PAGE_COLUMN_EXISTS";
+  public static readonly CAN_USER_MANAGE_PAGES: string =
+    "CAN_USER_MANAGE_PAGES";
+  public static readonly PARENT_PAGE_COLUMN_EXISTS: string =
+    "PARENT_PAGE_COLUMN_EXISTS";
   public static readonly GET_PAGES: string = "GET_PAGES";
   public static readonly GET_PAGES_LOADING: string = "GET_PAGES_LOADING";
   public static readonly GET_PAGES_ERRORED: string = "GET_PAGES_ERRORED";
@@ -48,14 +50,17 @@ function pagesReducer(state: PagesState, action: Action): PagesState {
   //First establish the type of the payload
   switch (action.type) {
     case ActionTypes.GET_PAGES_LOADING:
-      return { ...state, getRequest: { isLoading: true, hasError: false, errorMessage: "" } };
+      return {
+        ...state,
+        getRequest: { isLoading: true, hasError: false, errorMessage: "" },
+      };
     case ActionTypes.GET_PAGES:
       var arrayAction: PageTreePayloadAction = action as PageTreePayloadAction;
       return {
         ...state,
         childrenPages: arrayAction.payload.childgrenPages,
         ancestorPages: arrayAction.payload.ancestorPages,
-        getRequest: { isLoading: false, hasError: false, errorMessage: "" }
+        getRequest: { isLoading: false, hasError: false, errorMessage: "" },
       };
     case ActionTypes.GET_PAGES_ERRORED:
       return {
@@ -63,27 +68,30 @@ function pagesReducer(state: PagesState, action: Action): PagesState {
         getRequest: {
           isLoading: false,
           hasError: true,
-          errorMessage: "Get Pages Failure"
-        }
+          errorMessage: "Get Pages Failure",
+        },
       };
     case ActionTypes.PARENT_PAGE_COLUMN_EXISTS:
       var parentPageColumnExistAction: ParentPageColumnExistAction = action as ParentPageColumnExistAction;
       return {
         ...state,
-        parentPageColumnExists: parentPageColumnExistAction.payload
+        parentPageColumnExists: parentPageColumnExistAction.payload,
       };
     case ActionTypes.CAN_USER_MANAGE_PAGES:
       var canUserManagePagesAction: CanUserManagePagesAction = action as CanUserManagePagesAction;
       return {
         ...state,
-        userCanManagePages: canUserManagePagesAction.payload
+        userCanManagePages: canUserManagePagesAction.payload,
       };
     default:
       throw new Error();
   }
 }
 
-export function usePageApi(currentPageId: number, pageEditFinished: boolean): PageApi {
+export function usePageApi(
+  currentPageId: number,
+  pageEditFinished: boolean
+): PageApi {
   const [pagesState, pagesDispatch] = useReducer(pagesReducer, {
     parentPageColumnExists: true,
     userCanManagePages: false,
@@ -94,17 +102,20 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
 
   // currentPageId is a dependency only because it can change when on the workbench, otherwise it really wouldn't change while on a page
   useEffect(() => {
-    LogHelper.verbose('usePageApi', 'useEffect', `[currentPageId, ${currentPageId}, pageEditFinished: ${pageEditFinished} ]`);
+    LogHelper.verbose(
+      "usePageApi",
+      "useEffect",
+      `[currentPageId, ${currentPageId}, pageEditFinished: ${pageEditFinished} ]`
+    );
 
     if (currentPageId) {
       checkIfParentPageExists();
       getPagesAsync();
     }
-
   }, [currentPageId, pageEditFinished]);
 
   async function getPagesAsync() {
-    LogHelper.verbose('usePageApi', 'getPagesAsync', ``);
+    LogHelper.verbose("usePageApi", "getPagesAsync", ``);
 
     // check local storage first and return these and then refresh it in the background
 
@@ -113,23 +124,27 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
 
     // add select and order by later.  Order by ID?
     let pages: IPage[] = [];
-    let items = await sp.web.lists.getByTitle(ListTitles.SITEPAGES).items
-      .select(
+    let items = await sp.web.lists
+      .getByTitle(ListTitles.SITEPAGES)
+      .items.select(
         PageFields.ID,
         PageFields.TITLE,
         PageFields.FILEREF,
         PageFields.PARENTPAGELOOKUP,
         PageFields.PARENTPAGELOOKUP_ID,
         PageFields.PARENTPAGELOOKUP_TITLE,
+        PageFields.AUTHORTITLE,
+        PageFields.AUTHORNAME,
+        PageFields.AUTHOREMAIL,
+        PageFields.MODIFIED,
+        PageFields.BANNERIMAGEURL
       )
-      .expand(
-        PageFields.PARENTPAGELOOKUP
-      )
+      .expand(PageFields.PARENTPAGELOOKUP, PageFields.AUTHOR)
       .top(5000)
       .orderBy(PageFields.TITLE, true)
       .get()
-      .catch(e => {
-        ErrorHelper.handleHttpError('getPages', e);
+      .catch((e) => {
+        ErrorHelper.handleHttpError("getPages", e);
         pagesDispatch({ type: ActionTypes.GET_PAGES_ERRORED });
       });
 
@@ -139,7 +154,10 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
       }
     }
 
-    const ancestorPages: IPage[] = buildPageAncestors(pages, currentPageId).reverse();
+    const ancestorPages: IPage[] = buildPageAncestors(
+      pages,
+      currentPageId
+    ).reverse();
     const childrenPages: IPage[] = buildPageChildren(pages, currentPageId);
 
     // dispatch the GET_ALL action
@@ -150,61 +168,75 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
   }
 
   async function checkIfParentPageExists() {
-    LogHelper.verbose('usePageApi', 'parentPageExists', ``);
+    LogHelper.verbose("usePageApi", "parentPageExists", ``);
 
-    let parentPage = await sp.web.lists.getByTitle(ListTitles.SITEPAGES).fields
-      .getByInternalNameOrTitle(PageFields.PARENTPAGELOOKUP)
+    let parentPage = await sp.web.lists
+      .getByTitle(ListTitles.SITEPAGES)
+      .fields.getByInternalNameOrTitle(PageFields.PARENTPAGELOOKUP)
       .get()
-      .catch(e => {
+      .catch((e) => {
         // swallow the exception we'll handle below
       });
 
     if (parentPage) {
       // dispatch the action
-      pagesDispatch({ type: ActionTypes.PARENT_PAGE_COLUMN_EXISTS, payload: true } as ParentPageColumnExistAction);
-    }
-    else {
+      pagesDispatch({
+        type: ActionTypes.PARENT_PAGE_COLUMN_EXISTS,
+        payload: true,
+      } as ParentPageColumnExistAction);
+    } else {
       canCurrentUserManageSitePages();
       // dispatch the action
-      pagesDispatch({ type: ActionTypes.PARENT_PAGE_COLUMN_EXISTS, payload: false } as ParentPageColumnExistAction);
+      pagesDispatch({
+        type: ActionTypes.PARENT_PAGE_COLUMN_EXISTS,
+        payload: false,
+      } as ParentPageColumnExistAction);
     }
   }
 
   async function canCurrentUserManageSitePages(): Promise<void> {
-    let canManagePages = await sp.web.lists.getByTitle(ListTitles.SITEPAGES)
+    let canManagePages = await sp.web.lists
+      .getByTitle(ListTitles.SITEPAGES)
       .currentUserHasPermissions(PermissionKind.ManageLists)
-      .catch(e => {
-        ErrorHelper.handleHttpError('canUserUpdateSitePages', e);
+      .catch((e) => {
+        ErrorHelper.handleHttpError("canUserUpdateSitePages", e);
         return false;
       });
 
     // dispatch the action
-    pagesDispatch({ type: ActionTypes.CAN_USER_MANAGE_PAGES, payload: canManagePages } as CanUserManagePagesAction);
+    pagesDispatch({
+      type: ActionTypes.CAN_USER_MANAGE_PAGES,
+      payload: canManagePages,
+    } as CanUserManagePagesAction);
   }
 
   async function addParentPageFieldToSitePages(): Promise<void> {
-    LogHelper.verbose('usePageApi', 'addParentPageFieldToSitePages', ``);
+    LogHelper.verbose("usePageApi", "addParentPageFieldToSitePages", ``);
 
-    let list = await sp.web.lists.getByTitle(ListTitles.SITEPAGES)
-      .get();
+    let list = await sp.web.lists.getByTitle(ListTitles.SITEPAGES).get();
 
-    let lookup = await sp.web.lists.getByTitle(ListTitles.SITEPAGES).fields
-      .addLookup(PageFields.PARENTPAGELOOKUP, list.Id, PageFields.TITLE)
-      .catch(e => {
+    let lookup = await sp.web.lists
+      .getByTitle(ListTitles.SITEPAGES)
+      .fields.addLookup(PageFields.PARENTPAGELOOKUP, list.Id, PageFields.TITLE)
+      .catch((e) => {
         return null;
-        ErrorHelper.handleHttpError('canUserUpdateSitePages', e);
+        ErrorHelper.handleHttpError("canUserUpdateSitePages", e);
       });
 
-    await sp.web.lists.getByTitle(ListTitles.SITEPAGES).fields
-      .getByInternalNameOrTitle(PageFields.PARENTPAGELOOKUP)
+    await sp.web.lists
+      .getByTitle(ListTitles.SITEPAGES)
+      .fields.getByInternalNameOrTitle(PageFields.PARENTPAGELOOKUP)
       .update({ Title: PageFields.PARENTPAGELOOKUP_DISPLAYNAME })
-      .catch(e => {
-        ErrorHelper.handleHttpError('canUserUpdateSitePages', e);
+      .catch((e) => {
+        ErrorHelper.handleHttpError("canUserUpdateSitePages", e);
       });
 
     if (lookup) {
       // dispatch the action
-      pagesDispatch({ type: ActionTypes.PARENT_PAGE_COLUMN_EXISTS, payload: true } as ParentPageColumnExistAction);
+      pagesDispatch({
+        type: ActionTypes.PARENT_PAGE_COLUMN_EXISTS,
+        payload: true,
+      } as ParentPageColumnExistAction);
     }
   }
 
@@ -213,19 +245,35 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
     let page: IPage = {
       id: item.ID,
       title: item.Title,
-      etag: item['odata.etag'] ? item['odata.etag'] : new Date().toISOString(),
+      etag: item["odata.etag"] ? item["odata.etag"] : new Date().toISOString(),
       url: item[PageFields.FILEREF],
-      parentPageId: item[PageFields.PARENTPAGELOOKUP] ? item[PageFields.PARENTPAGELOOKUP].ID : null
+      parentPageId: item[PageFields.PARENTPAGELOOKUP]
+        ? item[PageFields.PARENTPAGELOOKUP].ID
+        : null,
+      authorTitle: item[PageFields.AUTHOR]
+        ? item[PageFields.AUTHOR].Title
+        : null,
+      authorName: item[PageFields.AUTHOR] ? item[PageFields.AUTHOR].Name : null,
+      authorEmail: item[PageFields.AUTHOR]
+        ? item[PageFields.AUTHOR].EMail
+        : null,
+      modified: item[PageFields.MODIFIED] ? item[PageFields.MODIFIED] : null,
+      bannerImageUrl: item[PageFields.BANNERIMAGEURL]
+        ? item[PageFields.BANNERIMAGEURL].Url
+        : null,
     };
 
     return page;
   }
 
-  function buildPageAncestors(allPages: IPage[], pageId: number, ancestorPages: IPage[] = []): IPage[] {
-
+  function buildPageAncestors(
+    allPages: IPage[],
+    pageId: number,
+    ancestorPages: IPage[] = []
+  ): IPage[] {
     // get all ancestor pages
     if (pageId) {
-      const currentPage = allPages.find(f => f.id === pageId);
+      const currentPage = allPages.find((f) => f.id === pageId);
       if (currentPage) {
         ancestorPages.push(currentPage);
         buildPageAncestors(allPages, currentPage.parentPageId, ancestorPages);
@@ -237,11 +285,10 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
 
   // get all children page
   function buildPageChildren(allPages: IPage[], pageId: number): IPage[] {
-
     let childPages: IPage[] = [];
 
     if (pageId) {
-      childPages = allPages.filter(f => f.parentPageId === pageId);
+      childPages = allPages.filter((f) => f.parentPageId === pageId);
     }
 
     return childPages;
@@ -260,9 +307,9 @@ export function usePageApi(currentPageId: number, pageEditFinished: boolean): Pa
       getRequest: {
         isLoading: pagesState.getRequest.isLoading,
         hasError: pagesState.getRequest.hasError,
-        errorMessage: pagesState.getRequest.errorMessage
+        errorMessage: pagesState.getRequest.errorMessage,
       },
     },
-    addParentPageField
+    addParentPageField,
   };
 }
