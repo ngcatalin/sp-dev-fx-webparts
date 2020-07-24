@@ -3,7 +3,7 @@
   "solution": {
     "name": "react-pages-hierarchy",
     "id": "89758fb6-85e2-4e2b-ac88-4f4e7e5f60cb",
-    "version": "1.0.1.2",
+    "version": "1.0.1.3",
     "includeClientSideAssets": true,
     "isDomainIsolated": false
   },

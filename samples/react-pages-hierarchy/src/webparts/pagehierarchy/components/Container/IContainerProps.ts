@@ -1,5 +1,5 @@
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
-import { PagesToDisplay } from '@src/utilities';
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
+import { PagesToDisplay, ChildrenLayout } from "@src/utilities";
 import { DisplayMode } from "@microsoft/sp-core-library";
 
 export interface IContainerProps {
@@ -11,6 +11,7 @@ export interface IContainerProps {
   showTitle: boolean;
   title: string;
   displayMode: DisplayMode;
+  childrenLayout?: ChildrenLayout;
   updateTitle: (value: string) => void;
   onConfigure: () => void;
 

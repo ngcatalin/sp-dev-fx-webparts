@@ -47,12 +47,9 @@ export const DocumentCardLayout: React.FunctionComponent<ILayoutProps> = (
           type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
           aria-label={item.title}
           onClickHref={item.url}
-          // onClick={(ev: React.SyntheticEvent<HTMLElement>) => (
-          //   <Link href={item.url}>{item.title}</Link>
-          // )}
         >
           <DocumentCardPreview {...previewProps} />
-          {/* {!isCompact && <DocumentCardLocation location={item.location} />} */}
+          {!isCompact && <DocumentCardLocation location={item.title} />}
           <DocumentCardDetails>
             <DocumentCardTitle title={item.title} shouldTruncate={true} />
             <DocumentCardActivity

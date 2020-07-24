@@ -6,7 +6,7 @@ import { IPropertyPaneConfiguration, IPropertyPaneGroup, PropertyPaneChoiceGroup
 import { UrlQueryParameterCollection } from '@microsoft/sp-core-library';
 import { PropertyFieldNumber } from '@pnp/spfx-property-controls/lib/PropertyFieldNumber';
 import BaseWebPart from '@src/webparts/BaseWebPart';
-import { Parameters, PagesToDisplay, LogHelper } from '@src/utilities';
+import { Parameters, PagesToDisplay, ChildrenLayout, LogHelper } from '@src/utilities';
 import IPageHierarchyWebPartProps from './IPageHierarchyWebPartProps';
 import * as strings from 'PageHierarchyWebPartStrings';
 import { Container, IContainerProps } from './components/Container';
@@ -51,6 +51,7 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
         showTitle: true,
         title: this.properties.title,
         displayMode: this.displayMode,
+        childrenLayout: this.properties.childrenLayout,
         updateTitle: (t) => { this.properties.title = t; this.render(); },
         onConfigure: () => { this.onConfigure(); },
         pageEditFinished: this.pageEditFinished
@@ -73,9 +74,9 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
   }
 
   /*
-  Really only used for workbench mode when we cannot get a page id for the current page.
-  We'll allow user to test with a property and also using mock data allow them to navigate when on local host with a querystring
-  */
+   Really only used for workbench mode when we cannot get a page id for the current page.
+   We'll allow user to test with a property and also using mock data allow them to navigate when on local host with a querystring
+   */
   private getDebugPageId() : number {
     let queryParms = new UrlQueryParameterCollection(window.location.href);
     let debugPageId = this.properties.debugPageId;
@@ -84,9 +85,9 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
     return debugPageId;
   }
   /*
-   when page edit goes from edit to read we start a timer so that we can wait for the save to occur
-   Things like the page title and page parent page property changing affect us
-  */
+ when page edit goes from edit to read we start a timer so that we can wait for the save to occur
+ Things like the page title and page parent page property changing affect us
+*/
   protected onDisplayModeChanged(oldDisplayMode: DisplayMode) {
     if (oldDisplayMode === DisplayMode.Edit) {
       setTimeout(() => {
@@ -151,6 +152,55 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
       ]
     });
 
+    // add group for choosing display mode
+    if (this.properties.pagesToDisplay === PagesToDisplay.Children) {
+      propertyPaneGroups.push({
+        groupName: strings.PropertyPane_GroupName_ChildrenLayout,
+        isCollapsed: false,
+        groupFields: [
+          PropertyPaneChoiceGroup("childrenLayout", {
+            label: strings.PropertyPane_Label_Children_Layout,
+            options: [
+              {
+                key: ChildrenLayout.Boxes,
+                text:
+                  strings.PropertyPane_PagesToDisplay_OptionText_Children_Box,
+                checked:
+                  this.properties.childrenLayout === ChildrenLayout.Boxes,
+                iconProps: { officeFabricIconFontName: "TextBox" },
+              },
+              {
+                key: ChildrenLayout.DocumentCards,
+                text:
+                  strings.PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard,
+                checked:
+                  this.properties.childrenLayout ===
+                  ChildrenLayout.DocumentCards,
+                iconProps: { officeFabricIconFontName: "Tiles" },
+              },
+              {
+                key: ChildrenLayout.DocumentCardsCompact,
+                text:
+                  strings.PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Compact,
+                checked:
+                  this.properties.childrenLayout ===
+                  ChildrenLayout.DocumentCardsCompact,
+                iconProps: { officeFabricIconFontName: "HardDrive" },
+              },
+              {
+                key: ChildrenLayout.Links,
+                text:
+                  strings.PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Links,
+                checked:
+                  this.properties.childrenLayout === ChildrenLayout.Links,
+                iconProps: { officeFabricIconFontName: "Link12" },
+              },
+            ],
+          }),
+        ],
+      });
+    }
+
     propertyPaneGroups.push({
       groupName: strings.PropertyPane_GroupName_About,
       isCollapsed: false,
@@ -160,7 +210,7 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
         })
       ]
     });
-
+    
 
     return {
       pages: [

@@ -1,4 +1,4 @@
-define([], function() {
+define([], function () {
   return {
     "Configuration_Placeholder_IconText": "Configure Page Hierarchy Web Part",
     "Configuration_Placeholder_Description": "Please configure the web part.",
@@ -18,6 +18,12 @@ define([], function() {
     "PropertyPane_GroupName_Debug": "Debug",
     "PropertyPane_Label_DebugPageId": "Debug Page Id",
     "PropertyPane_Label_VersionInfo": "Version: ",
-    "PropertyPane_Description_DebugPageId": "Provide a valid page list item id to see how the web part would render for it"
+    "PropertyPane_Description_DebugPageId": "Provide a valid page list item id to see how the web part would render for it",
+    "PropertyPane_PagesToDisplay_OptionText_Children_Box": "Boxes",
+    "PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard": "Tiles",
+    "PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Compact": "Tiles",
+    "PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Links": "Links",
+    "PropertyPane_Label_Children_Layout": "Choose the layout for the children pages",
+    "PropertyPane_GroupName_ChildrenLayout": "Children Layout"
   }
 });

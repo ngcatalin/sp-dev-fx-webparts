@@ -4,7 +4,7 @@ import styles from "./Container.module.scss";
 import * as strings from "PageHierarchyWebPartStrings";
 import { BreadcrumbLayout, ListLayout, DocumentCardLayout } from "../Layouts";
 import { IContainerProps } from "./IContainerProps";
-import { PagesToDisplay } from "@src/utilities";
+import { PagesToDisplay, ChildrenLayout } from "@src/utilities";
 import { usePageApi } from "@src/apiHooks/usePageApi";
 import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
 
@@ -23,14 +23,44 @@ export const Container: React.FunctionComponent<IContainerProps> = (props) => {
       );
       break;
     case PagesToDisplay.Children:
-      //controlToRender = <ListLayout domElement={props.domElement} pages={pagesApi.state.childrenPages} themeVariant={props.themeVariant} />;
-      controlToRender = (
-        <DocumentCardLayout
-          domElement={props.domElement}
-          pages={pagesApi.state.childrenPages}
-          themeVariant={props.themeVariant}
-        />
-      );
+      switch (props.childrenLayout) {
+        case ChildrenLayout.Boxes:
+          controlToRender = (
+            <ListLayout
+              domElement={props.domElement}
+              pages={pagesApi.state.childrenPages}
+              themeVariant={props.themeVariant}
+            />
+          );
+          break;
+        case ChildrenLayout.DocumentCards:
+          controlToRender = (
+            <DocumentCardLayout
+              domElement={props.domElement}
+              pages={pagesApi.state.childrenPages}
+              themeVariant={props.themeVariant}
+            />
+          );
+          break;
+        case ChildrenLayout.DocumentCardsCompact:
+          controlToRender = (
+            <DocumentCardLayout
+              domElement={props.domElement}
+              pages={pagesApi.state.childrenPages}
+              themeVariant={props.themeVariant}
+            />
+          );
+          break;
+        default:
+          controlToRender = (
+            <ListLayout
+              domElement={props.domElement}
+              pages={pagesApi.state.childrenPages}
+              themeVariant={props.themeVariant}
+            />
+          );
+          break;
+      }
       break;
     default:
       controlToRender = (
