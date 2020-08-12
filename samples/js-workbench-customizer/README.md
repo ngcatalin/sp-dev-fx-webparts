@@ -50,6 +50,9 @@ Version|Date|Comments
 1.0|January 24, 2019|Initial release
 1.1|February 05, 2020|Update to SPFx 1.10.0
 1.2|June 04, 2020|Added full-width support
+1.3|July 07, 2020|Simplified web part
+1.4|July 28, 2020|Update styles to minimise toolbar overlap
+1.5|July 30, 2020|Update styles to improve full-width mode
 
 ## Disclaimer
 
