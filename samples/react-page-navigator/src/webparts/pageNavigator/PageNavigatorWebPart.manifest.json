@@ -17,11 +17,11 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
     "group": { "default": "Other" },
-    "title": { "default": "PageNavigator" },
-    "description": { "default": "PageNavigator description" },
+    "title": { "default": "Table of contents" },
+    "description": { "default": "Generates a table of contents using the page headings" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "PageNavigator"
+      "title": "Table of contents"
     }
   }]
 }

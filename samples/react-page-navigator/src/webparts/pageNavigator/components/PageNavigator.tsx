@@ -3,6 +3,7 @@ import styles from './PageNavigator.module.scss';
 import { IPageNavigatorProps } from './IPageNavigatorProps';
 import { IPageNavigatorState } from './IPageNavigatorState';
 import { Nav, INavLink } from 'office-ui-fabric-react/lib/Nav';
+import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
 
 export default class PageNavigator extends React.Component<IPageNavigatorProps, IPageNavigatorState> {
   constructor(props: IPageNavigatorProps) {
@@ -31,7 +32,13 @@ export default class PageNavigator extends React.Component<IPageNavigatorProps, 
   }
 
   public render(): React.ReactElement<IPageNavigatorProps> {
+    const webPartTitle: JSX.Element = <WebPartTitle displayMode={this.props.displayMode}
+      title={this.props.title}
+      updateProperty={this.props.updateProperty} />;
+
     return (
+      <>
+      { webPartTitle }
       <div className={styles.pageNavigator}>
         <div className={styles.container}>
           <div className={styles.row}>
@@ -48,6 +55,7 @@ export default class PageNavigator extends React.Component<IPageNavigatorProps, 
           </div>
         </div>
       </div>
+      </>
     );
   }
 }

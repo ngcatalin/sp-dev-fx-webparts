@@ -14,7 +14,7 @@ import { INavLink } from 'office-ui-fabric-react/lib/Nav';
 import { SPService } from '../../Service/SPService';
 
 export interface IPageNavigatorWebPartProps {
-  description: string;
+  title: string;
 }
 
 export default class PageNavigatorWebPart extends BaseClientSideWebPart<IPageNavigatorWebPartProps> {
@@ -24,7 +24,11 @@ export default class PageNavigatorWebPart extends BaseClientSideWebPart<IPageNav
     const element: React.ReactElement<IPageNavigatorProps > = React.createElement(
       PageNavigator,
       {
-        description: this.properties.description,
+        title: this.properties.title,
+        displayMode: this.displayMode,
+        updateProperty: (value: string) => {
+          this.properties.title = value;
+        },
         anchorLinks: this.anchorLinks
       }
     );
