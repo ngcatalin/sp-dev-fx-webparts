@@ -67,5 +67,29 @@ export class PagesList implements BaseList {
       FileRef: '?DebugPageId=10',
       ParentPageId: 5
     },
+    {
+      ID: 100,
+      Title: 'Europe',
+      FileRef: '?DebugPageId=100',
+      ParentPageId: 1
+    },
+    {
+      ID: 101,
+      Title: 'Romania',
+      FileRef: '?DebugPageId=101',
+      ParentPageId: 100
+    },
+    {
+      ID: 102,
+      Title: 'Dolj',
+      FileRef: '?DebugPageId=102',
+      ParentPageId: 101
+    },
+    {
+      ID: 103,
+      Title: 'Craiova',
+      FileRef: '?DebugPageId=103',
+      ParentPageId: 102
+    },
   ];
 }

@@ -1,10 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
-import styles from "./Layouts.module.scss";
 import { IPage } from "@src/models/IPage";
-import { Icon, ActionButton, Link } from "office-ui-fabric-react";
 import { ILayoutProps } from "./ILayoutProps";
-import ReactResizeDetector from "react-resize-detector";
 import * as strings from "PageHierarchyWebPartStrings";
 import {
   DocumentCard,
