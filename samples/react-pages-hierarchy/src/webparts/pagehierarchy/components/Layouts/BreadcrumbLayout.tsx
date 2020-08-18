@@ -10,6 +10,8 @@ export const BreadcrumbLayout: React.FunctionComponent<ILayoutProps> = props => 
     breadcrumbItems = props.pages.map((page) => {
       return ( { text: page.title, key: page.id.toString(), href: page.url } );
     });
+    //last item shouldn't be rendered as link
+    breadcrumbItems[breadcrumbItems.length-1].href=null;
   }
 
    return (
