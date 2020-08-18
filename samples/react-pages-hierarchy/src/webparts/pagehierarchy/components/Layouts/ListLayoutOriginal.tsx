@@ -7,7 +7,7 @@ import { ILayoutProps } from './ILayoutProps';
 import ReactResizeDetector from 'react-resize-detector';
 import * as strings from 'PageHierarchyWebPartStrings';
 
-export const ListLayout: React.FunctionComponent<ILayoutProps> = props => {
+export const ListLayoutOriginal: React.FunctionComponent<ILayoutProps> = props => {
   const [elementWidth, setElementWidth] = useState(props.domElement.getBoundingClientRect().width);
 
   /*

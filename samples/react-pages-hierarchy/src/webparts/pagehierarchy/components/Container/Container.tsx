@@ -2,7 +2,11 @@ import * as React from "react";
 import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
 import styles from "./Container.module.scss";
 import * as strings from "PageHierarchyWebPartStrings";
-import { BreadcrumbLayout, ListLayout, DocumentCardLayout } from "../Layouts";
+import {
+  BreadcrumbLayout,
+  BoxesLayout,
+  DocumentCardLayout,
+} from "../Layouts";
 import { IContainerProps } from "./IContainerProps";
 import { PagesToDisplay, ChildrenLayout } from "@src/utilities";
 import { usePageApi } from "@src/apiHooks/usePageApi";
@@ -26,7 +30,7 @@ export const Container: React.FunctionComponent<IContainerProps> = (props) => {
       switch (props.childrenLayout) {
         case ChildrenLayout.Boxes:
           controlToRender = (
-            <ListLayout
+            <BoxesLayout
               domElement={props.domElement}
               pages={pagesApi.state.childrenPages}
               themeVariant={props.themeVariant}
@@ -44,7 +48,7 @@ export const Container: React.FunctionComponent<IContainerProps> = (props) => {
           break;
         default:
           controlToRender = (
-            <ListLayout
+            <BoxesLayout
               domElement={props.domElement}
               pages={pagesApi.state.childrenPages}
               themeVariant={props.themeVariant}
