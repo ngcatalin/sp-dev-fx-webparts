@@ -165,9 +165,10 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
                 key: ChildrenLayout.Boxes,
                 text:
                   strings.PropertyPane_PagesToDisplay_OptionText_Children_Box,
-                checked:
-                  this.properties.childrenLayout === ChildrenLayout.Boxes,
-                iconProps: { officeFabricIconFontName: "TextBox" },
+                checked: this.properties.childrenLayout !== undefined
+                  ? this.properties.childrenLayout === ChildrenLayout.Boxes
+                  : true,
+                iconProps: { officeFabricIconFontName: "Tiles" },
               },
               {
                 key: ChildrenLayout.DocumentCards,
@@ -176,24 +177,7 @@ export default class PageHierarchyWebPart extends BaseWebPart<IPageHierarchyWebP
                 checked:
                   this.properties.childrenLayout ===
                   ChildrenLayout.DocumentCards,
-                iconProps: { officeFabricIconFontName: "Tiles" },
-              },
-              {
-                key: ChildrenLayout.DocumentCardsCompact,
-                text:
-                  strings.PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Compact,
-                checked:
-                  this.properties.childrenLayout ===
-                  ChildrenLayout.DocumentCardsCompact,
-                iconProps: { officeFabricIconFontName: "HardDrive" },
-              },
-              {
-                key: ChildrenLayout.Links,
-                text:
-                  strings.PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Links,
-                checked:
-                  this.properties.childrenLayout === ChildrenLayout.Links,
-                iconProps: { officeFabricIconFontName: "Link12" },
+                iconProps: { officeFabricIconFontName: "GridViewSmall" },
               },
             ],
           }),

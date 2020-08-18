@@ -8,8 +8,6 @@ export enum ChildrenLayout {
   None = "none",
   Boxes = "boxes",
   DocumentCards = "documentcards",
-  DocumentCardsCompact = "documentcardscompact",
-  Links = "links",
 }
 
 export enum RenderDirection {

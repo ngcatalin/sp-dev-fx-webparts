@@ -20,7 +20,7 @@
         "default": "Page Hierarchy"
       },
       "description": {
-        "default": "Breadcrumbs description"
+        "default": "Provides alternative page navigation based on parent-child relationships"
       },
       "officeFabricIconFontName": "CompassNW",
       "properties": {

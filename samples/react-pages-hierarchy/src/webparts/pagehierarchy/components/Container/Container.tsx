@@ -42,15 +42,6 @@ export const Container: React.FunctionComponent<IContainerProps> = (props) => {
             />
           );
           break;
-        case ChildrenLayout.DocumentCardsCompact:
-          controlToRender = (
-            <DocumentCardLayout
-              domElement={props.domElement}
-              pages={pagesApi.state.childrenPages}
-              themeVariant={props.themeVariant}
-            />
-          );
-          break;
         default:
           controlToRender = (
             <ListLayout
