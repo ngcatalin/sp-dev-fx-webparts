@@ -21,8 +21,6 @@ define([], function () {
     "PropertyPane_Description_DebugPageId": "Provide a valid page list item id to see how the web part would render for it",
     "PropertyPane_PagesToDisplay_OptionText_Children_Box": "Boxes",
     "PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard": "Tiles",
-    "PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Compact": "Tiles",
-    "PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Links": "Links",
     "PropertyPane_Label_Children_Layout": "Choose the layout for the children pages",
     "PropertyPane_GroupName_ChildrenLayout": "Children Layout",
     "BreadcrumbLayout_AriaLabel": "Page navigation breadcrumb",

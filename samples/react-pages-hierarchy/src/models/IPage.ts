@@ -6,10 +6,9 @@ export interface IPage {
   etag?: string | null;
   url: string;
   parentPageId?: number;
-  modified: string;
+  modified: Date;
   authorTitle: string;
   authorName: string;
   authorEmail: string;
   bannerImageUrl?: string;
-  //previewImageSrc?: string;
 }

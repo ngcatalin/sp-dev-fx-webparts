@@ -15,7 +15,7 @@ import {
 import { ImageFit } from "office-ui-fabric-react/lib/Image";
 import { ISize } from "office-ui-fabric-react/lib/Utilities";
 import { GridLayout } from "@pnp/spfx-controls-react/lib/GridLayout";
-import { sp } from "@pnp/sp/presets/all";
+import * as moment from "moment";
 
 export const DocumentCardLayout: React.FunctionComponent<ILayoutProps> = (
   props
@@ -49,7 +49,7 @@ export const DocumentCardLayout: React.FunctionComponent<ILayoutProps> = (
           <DocumentCardDetails>
             <DocumentCardTitle title={item.title} shouldTruncate={true} />
             <DocumentCardActivity
-              activity={item.modified}
+              activity={moment(item.modified).format('ll')}
               people={[
                 {
                   name: item.authorTitle,

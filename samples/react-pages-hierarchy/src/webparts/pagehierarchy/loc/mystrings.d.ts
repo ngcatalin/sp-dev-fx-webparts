@@ -22,8 +22,6 @@ declare interface IPageHierarchyWebPartStrings {
   PropertyPane_Label_Children_Layout: string;
   PropertyPane_PagesToDisplay_OptionText_Children_Box: string;
   PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard: string;
-  PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Compact: string;
-  PropertyPane_PagesToDisplay_OptionText_Children_DocumentCard_Links: string;
   BreadcrumbLayout_AriaLabel:string;
   BreadcrumbLayout_OverflowItems: string;
 }
